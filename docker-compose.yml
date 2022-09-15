@@ -1,0 +1,19 @@
+version: '2.6'
+
+services:
+ tasks:
+  container_name: db-patients
+  restart: 'always'
+  ports: 
+   - "5432:5432"
+  environment:
+   - POSTGRES_DB=patients 
+   - POSTGRES_PASSWORD=1111
+   - POSTGRES_USER=postgres
+  image: postgres:alpine
+  build:
+   context: .
+   dockerfile: docker/db/Dockerfile
+  volumes:
+   - ./postgres-data:/var/lib/postgresql/data
+   - ./resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql

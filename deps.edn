@@ -1,0 +1,15 @@
+{
+ :paths ["src" "src-ui" "test" "./"  "resources"]
+
+
+ :deps
+  {http-kit/http-kit {:mvn/version "2.7.0-alpha1"}
+   ring/ring {:mvn/version "2.0.0-alpha1"}
+   ring/ring-json {:mvn/version "0.5.1"}
+   compojure/compojure {:mvn/version "1.7.0"}
+   seancorfield/next.jdbc {:mvn/version "1.2.659"}
+   org.postgresql/postgresql {:mvn/version "42.4.1"}
+   io.github.healthsamurai/dsql {:git/url "https://github.com/HealthSamurai/dsql"
+                                 :sha "0896397e3237cc5435510accbe73d9df1c90b23e"}
+   org.clojure/data.json {:mvn/version "2.4.0"}
+ }}
