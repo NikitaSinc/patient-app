@@ -78,7 +78,16 @@
   :success-get-patients
   (fn [db [_ response]]
     (assoc db :patients (cljsfy-vec response))))
+;-------------------------------------------------------------------------------main view events
+(rf/reg-sub
+  :patients
+  (fn [db _]
+    (:patients db)))
 
+(rf/reg-sub
+  :error
+  (fn [db _]
+    (:error db)))
 ;-------------------------------------------------------------------------------fio input events
 (rf/reg-sub
   :new-patient
@@ -151,13 +160,6 @@
       :fx [[:new-patient-oms-validation oms]]}))
 
 ;------------------------------------------------------------------------------gender input events
-(rf/reg-sub
-  :new-patient-gender
-  (fn [_]
-    (rf/subscribe [:new-patient]))
-  (fn [patient _]
-    (:patients/gender patient)))
-
 (rf/reg-event-db
   :new-patient-gender-valid
   (fn [db [_ valid]]
@@ -167,11 +169,68 @@
   :new-patient-gender-validation
   (fn [gender]
     (if (not (nil? gender))
-      (rf/dispatch [:new-patient-is-valid true])
-      (rf/dispatch [:new-patient-is-valid false]))))
+      (rf/dispatch [:new-patient-gender-valid true])
+      (rf/dispatch [:new-patient-gender-valid false]))))
 
 (rf/reg-event-fx
   :new-patient-gender-update
   (fn [cofx [_ gender]]
      {:db (update-in (:db cofx) [:new-patient :patients/gender] (fn [old] gender))
       :fx [[:new-patient-gender-validation gender]]}))
+
+;--------------------------------------------------------------------------------dob input events
+(rf/reg-event-db
+  :new-patient-dob-valid
+  (fn [db [_ valid]]
+    (update-in db [:new-patient-is-valid :dob-valid] (fn [old] valid))))
+
+(rf/reg-fx
+  :new-patient-dob-validation
+  (fn [dob]
+    (if (nil? dob)
+      (do (rf/dispatch [:new-patient-dob-valid false])
+          (rf/dispatch [:set-error nil]))
+      (if (<= (js/Date. dob) (js/Date.))
+      (do (rf/dispatch [:new-patient-dob-valid true])
+          (rf/dispatch [:set-error nil]))
+      (do (rf/dispatch [:new-patient-dob-valid false])
+          (rf/dispatch [:set-error "Go back to the future!"]))))))
+
+(rf/reg-event-fx
+  :new-patient-dob-update
+  (fn [cofx [_ dob]]
+     {:db (update-in (:db cofx) [:new-patient :patients/dob] (fn [old] dob))
+      :fx [[:new-patient-dob-validation dob]]}))
+
+;--------------------------------------------------------------------------------address input events
+(rf/reg-sub
+  :new-patient-address
+  (fn [_]
+    (rf/subscribe [:new-patient]))
+  (fn [patient _]
+    (:patients/address patient)))
+
+(rf/reg-event-db
+  :new-patient-address-valid
+  (fn [db [_ valid]]
+    (update-in db [:new-patient-is-valid :address-valid] (fn [old] valid))))
+
+(rf/reg-fx
+  :new-patient-address-validation
+  (fn [address]
+    (if (= 0 (count address))
+      (do (rf/dispatch [:set-error nil])
+          (rf/dispatch [:new-patient-address-valid false]))
+      (if (> (count address) 200)
+        (rf/dispatch [:set-error "To many characters in field Address"])
+        (if-let [valid (re-matches #"[a-zA-Zа-яА-Я0-9 \-\.]+" address)]
+          (do (rf/dispatch [:new-patient-address-valid true])
+              (rf/dispatch [:set-error nil]))
+          (do (rf/dispatch [:new-patient-address-valid false])
+              (rf/dispatch [:set-error "Unacceptable chracters in field Address"])))))))
+
+(rf/reg-event-fx
+  :new-patient-address-update
+  (fn [cofx [_ address]]
+     {:db (update-in (:db cofx) [:new-patient :patients/address] (fn [old] address))
+      :fx [[:new-patient-address-validation address]]}))

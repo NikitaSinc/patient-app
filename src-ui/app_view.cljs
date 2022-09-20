@@ -6,15 +6,7 @@
                   [app-events :as ev]
                   [inputs :as i]))
 
-(rf/reg-sub
-  :patients
-  (fn [db _]
-    (:patients db)))
 
-(rf/reg-sub
-  :error
-  (fn [db _]
-    (:error db)))
 
 (defn compute-age [dob]
   (str (js/Math.abs (- (.getUTCFullYear (js/Date.)) (.getUTCFullYear dob)))))
@@ -39,10 +31,9 @@
     [:input {:type :radio :value "Males"} ]
     [:input {:type :radio :value "Females"} ]]])
 
-
 (defn table []
   [:div
-   [:table {:class (c :table [:border 2] [:w 200] :rounded)}
+   [:table {:class (c :table [:border 2] [:w 200]  :rounded)}
     [:thead
      [:tr
      [:th "FIO"]
@@ -52,7 +43,7 @@
      [:th "Address"]
       [:th]
       [:th]]]
-    [:tbody
+    [:tbody {:class (c [:px 5])}
     (doall
       (let [patients (rf/subscribe [:patients])]
         (for [p @patients]
@@ -63,15 +54,15 @@
            [:td (:patients/gender p)]
            [:td (compute-age (:patients/dob p))]
            [:td (:patients/address p)]
-           [:td "Change"]
-           [:td "Delete"]])))
+           [:td [:button "Change"]]
+           [:td [:button "Delete"]]])))
      [:tr
       [:td [i/fio-input]]
       [:td [i/oms-input]]
       [:td [i/gender-select]]
       [:td [i/birth-input]]
       [:td [i/address-input]]
-      [:td "Add"]]]]])
+      [:td [:button "Add"]]]]]])
 
 (defn app []
   [:div {:class (c [:px 12])}
