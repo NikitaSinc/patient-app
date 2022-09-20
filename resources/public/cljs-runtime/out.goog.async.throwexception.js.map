@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"out.goog.async.throwexception.js",
+"lineCount":12,
+"mappings":"AAAcA,IAAKC,CAAAA,UAAL,CAAgB,QAAQ,CAACC,OAAD,CAAU;AAMhDF,MAAKG,CAAAA,MAAL,CAAY,2BAAZ,CAAA;AACAH,MAAKG,CAAAA,MAAOC,CAAAA,sBAAZ,EAAA;AACAC,UAASA,eAAc,CAACC,SAAD,CAAY;AACjCN,QAAKO,CAAAA,MAAOC,CAAAA,UAAZ,CAAuB,EAAA,IAAM;AAC3B,YAAMF,SAAN;AAD2B,KAA7B,EAEG,CAFH,CAAA;AADiC;AAKnCJ,SAAA,GAAUG,cAAV;AAEC,SAAOH,OAAP;AAf+C,CAAlC,CAAA;;",
+"sources":["out/goog/async/throwexception.js"],
+"sourcesContent":["/*TRANSPILED*/goog.loadModule(function(exports) {'use strict';/*\n\n Copyright The Closure Library Authors.\n SPDX-License-Identifier: Apache-2.0\n*/\n'use strict';\ngoog.module(\"goog.async.throwException\");\ngoog.module.declareLegacyNamespace();\nfunction throwException(exception) {\n  goog.global.setTimeout(() => {\n    throw exception;\n  }, 0);\n}\nexports = throwException;\n\n;return exports;});\n"],
+"names":["goog","loadModule","exports","module","declareLegacyNamespace","throwException","exception","global","setTimeout"]
+}

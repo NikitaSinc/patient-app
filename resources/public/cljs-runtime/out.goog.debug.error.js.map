@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"out.goog.debug.error.js",
+"lineCount":26,
+"mappings":"AAAcA,IAAKC,CAAAA,UAAL,CAAgB,QAAQ,CAACC,OAAD,CAAU;AAMhDF,MAAKG,CAAAA,MAAL,CAAY,kBAAZ,CAAA;AACAH,MAAKG,CAAAA,MAAOC,CAAAA,sBAAZ,EAAA;AACAC,UAASA,WAAU,CAACC,GAAA,GAAMC,SAAP,EAAkBC,KAAA,GAAQD,SAA1B,CAAqC;AACtD,QAAIE,KAAMC,CAAAA,iBAAV;AACED,WAAMC,CAAAA,iBAAN,CAAwB,IAAxB,EAA8BL,UAA9B,CAAA;AADF,UAEO;AACL,YAAMM,QAAsBA,CAAb,IAAIF,KAAJ,EAAaE,EAAAA,KAA5B;AACA,UAAIA,KAAJ;AACE,YAAKA,CAAAA,KAAL,GAAaA,KAAb;AADF;AAFK;AAMP,QAAIL,GAAJ;AACE,UAAKM,CAAAA,OAAL,GAAeC,MAAA,CAAOP,GAAP,CAAf;AADF;AAGA,QAAIE,KAAJ,KAAcD,SAAd;AACE,UAAKC,CAAAA,KAAL,GAAaA,KAAb;AADF;AAGA,QAAKM,CAAAA,mBAAL,GAA2B,IAA3B;AAfsD;AAiBxDd,MAAKe,CAAAA,QAAL,CAAcV,UAAd,EAA0BI,KAA1B,CAAA;AACAJ,YAAWW,CAAAA,SAAUC,CAAAA,IAArB,GAA4B,aAA5B;AACAf,SAAA,GAAUG,UAAV;AAEC,SAAOH,OAAP;AA7B+C,CAAlC,CAAA;;",
+"sources":["out/goog/debug/error.js"],
+"sourcesContent":["/*TRANSPILED*/goog.loadModule(function(exports) {'use strict';/*\n\n Copyright The Closure Library Authors.\n SPDX-License-Identifier: Apache-2.0\n*/\n'use strict';\ngoog.module(\"goog.debug.Error\");\ngoog.module.declareLegacyNamespace();\nfunction DebugError(msg = undefined, cause = undefined) {\n  if (Error.captureStackTrace) {\n    Error.captureStackTrace(this, DebugError);\n  } else {\n    const stack = (new Error()).stack;\n    if (stack) {\n      this.stack = stack;\n    }\n  }\n  if (msg) {\n    this.message = String(msg);\n  }\n  if (cause !== undefined) {\n    this.cause = cause;\n  }\n  this.reportErrorToServer = true;\n}\ngoog.inherits(DebugError, Error);\nDebugError.prototype.name = \"CustomError\";\nexports = DebugError;\n\n;return exports;});\n"],
+"names":["goog","loadModule","exports","module","declareLegacyNamespace","DebugError","msg","undefined","cause","Error","captureStackTrace","stack","message","String","reportErrorToServer","inherits","prototype","name"]
+}

@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"out.goog.labs.useragent.useragent.js",
+"lineCount":11,
+"mappings":"AAAcA,IAAKC,CAAAA,UAAL,CAAgB,QAAQ,CAACC,OAAD,CAAU;AAMhDF,MAAKG,CAAAA,MAAL,CAAY,qBAAZ,CAAA;AACA,QAAMC,4BAA4BJ,IAAKK,CAAAA,MAAL,CAAY,+CAAZ,EAA6D,EAA7D,CAAlC;AACA,QAAMC,mBAAmBN,IAAKK,CAAAA,MAAL,CAAY,sCAAZ,EAAoD,KAApD,CAAzB;AACAH,SAAQI,CAAAA,gBAAR,GAA4B,CAAA,EAAA,IAAM;AAChC,UAAMC,WAAWH,yBAAA,GAA4BJ,IAAKQ,CAAAA,eAAL,CAAqBJ,yBAArB,CAA5B,GAA8E,IAA/F;AACA,WAAOG,QAAA,IAAY,IAAZ,GAAmBA,QAAnB,GAA8BD,gBAArC;AAFgC,GAAN,CAAD,EAA3B;AAKC,SAAOJ,OAAP;AAd+C,CAAlC,CAAA;;",
+"sources":["out/goog/labs/useragent/useragent.js"],
+"sourcesContent":["/*TRANSPILED*/goog.loadModule(function(exports) {'use strict';/*\n\n Copyright The Closure Library Authors.\n SPDX-License-Identifier: Apache-2.0\n*/\n'use strict';\ngoog.module(\"goog.labs.userAgent\");\nconst USE_CLIENT_HINTS_OVERRIDE = goog.define(\"goog.labs.userAgent.USE_CLIENT_HINTS_OVERRIDE\", \"\");\nconst USE_CLIENT_HINTS = goog.define(\"goog.labs.userAgent.USE_CLIENT_HINTS\", false);\nexports.USE_CLIENT_HINTS = (() => {\n  const override = USE_CLIENT_HINTS_OVERRIDE ? goog.getObjectByName(USE_CLIENT_HINTS_OVERRIDE) : null;\n  return override != null ? override : USE_CLIENT_HINTS;\n})();\n\n;return exports;});\n"],
+"names":["goog","loadModule","exports","module","USE_CLIENT_HINTS_OVERRIDE","define","USE_CLIENT_HINTS","override","getObjectByName"]
+}

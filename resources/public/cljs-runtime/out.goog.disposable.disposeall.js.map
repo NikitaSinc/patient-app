@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"out.goog.disposable.disposeall.js",
+"lineCount":18,
+"mappings":"AAAcA,IAAKC,CAAAA,UAAL,CAAgB,QAAQ,CAACC,OAAD,CAAU;AAMhDF,MAAKG,CAAAA,MAAL,CAAY,iBAAZ,CAAA;AACAH,MAAKG,CAAAA,MAAOC,CAAAA,sBAAZ,EAAA;AACA,QAAMC,UAAUL,IAAKM,CAAAA,OAAL,CAAa,cAAb,CAAhB;AACAC,UAASA,WAAU,CAACC,QAAD,CAAW;AAC5B,SAAK,IAAIC,IAAI,CAAR,EAAWC,MAAMC,SAAUC,CAAAA,MAAhC,EAAwCH,CAAxC,GAA4CC,GAA5C,EAAiD,EAAED,CAAnD,CAAsD;AACpD,YAAMI,aAAaF,SAAA,CAAUF,CAAV,CAAnB;AACA,UAAIT,IAAKc,CAAAA,WAAL,CAAiBD,UAAjB,CAAJ;AACEN,kBAAWQ,CAAAA,KAAX,CAAiB,IAAjB,EAAuBF,UAAvB,CAAA;AADF;AAGER,eAAA,CAAQQ,UAAR,CAAA;AAHF;AAFoD;AAD1B;AAU9BX,SAAA,GAAUK,UAAV;AAEC,SAAOL,OAAP;AArB+C,CAAlC,CAAA;;",
+"sources":["out/goog/disposable/disposeall.js"],
+"sourcesContent":["/*TRANSPILED*/goog.loadModule(function(exports) {'use strict';/*\n\n Copyright The Closure Library Authors.\n SPDX-License-Identifier: Apache-2.0\n*/\n'use strict';\ngoog.module(\"goog.disposeAll\");\ngoog.module.declareLegacyNamespace();\nconst dispose = goog.require(\"goog.dispose\");\nfunction disposeAll(var_args) {\n  for (let i = 0, len = arguments.length; i < len; ++i) {\n    const disposable = arguments[i];\n    if (goog.isArrayLike(disposable)) {\n      disposeAll.apply(null, disposable);\n    } else {\n      dispose(disposable);\n    }\n  }\n}\nexports = disposeAll;\n\n;return exports;});\n"],
+"names":["goog","loadModule","exports","module","declareLegacyNamespace","dispose","require","disposeAll","var_args","i","len","arguments","length","disposable","isArrayLike","apply"]
+}

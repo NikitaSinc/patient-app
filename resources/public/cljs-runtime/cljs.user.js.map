@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"cljs.user.js",
+"lineCount":2,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,WAAb,CAAA;;",
+"sources":["cljs.user.js"],
+"sourcesContent":["goog.provide('cljs.user');\n\n//# sourceMappingURL=cljs.user.js.map\n"],
+"names":["goog","provide"]
+}

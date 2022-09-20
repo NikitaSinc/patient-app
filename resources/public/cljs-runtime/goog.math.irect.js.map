@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"goog.math.irect.js",
+"lineCount":8,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,iBAAb,CAAA;AACAD,IAAKE,CAAAA,IAAKC,CAAAA,KAAV,GAAkBC,QAAQ,EAAG;CAA7B;AAEAJ,IAAKE,CAAAA,IAAKC,CAAAA,KAAME,CAAAA,SAAUC,CAAAA,IAA1B;AACAN,IAAKE,CAAAA,IAAKC,CAAAA,KAAME,CAAAA,SAAUE,CAAAA,GAA1B;AACAP,IAAKE,CAAAA,IAAKC,CAAAA,KAAME,CAAAA,SAAUG,CAAAA,KAA1B;AACAR,IAAKE,CAAAA,IAAKC,CAAAA,KAAME,CAAAA,SAAUI,CAAAA,MAA1B;;",
+"sources":["goog.math.irect.js"],
+"sourcesContent":["goog.provide(\"goog.math.IRect\");\ngoog.math.IRect = function() {\n};\ngoog.math.IRect.prototype.left;\ngoog.math.IRect.prototype.top;\ngoog.math.IRect.prototype.width;\ngoog.math.IRect.prototype.height;\n\n//# sourceMappingURL=goog.math.irect.js.map\n"],
+"names":["goog","provide","math","IRect","goog.math.IRect","prototype","left","top","width","height"]
+}

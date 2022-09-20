@@ -3,11 +3,17 @@
 (def config
   {:cur :dev
    :dev {
+         :jwt {
+               :enebled true
+               :secret "mysecret"
+               }
          :db    {
-                 :db_port 5432
-                 :db_user "postgres"
-                 :db_name "patients"
-                 :db_password "1111"}
+                 :dbtype "postgresql"
+                 :dbport 5432
+                 :dbuser "postgres"
+                 :dbname "patients"
+                 :dbpassword "1111"
+                 :dbhost "localhost"}
          :server{
                  :port 8080
                  :host "http://localhost:"}

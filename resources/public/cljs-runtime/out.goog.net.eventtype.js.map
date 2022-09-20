@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"out.goog.net.eventtype.js",
+"lineCount":3,
+"mappings":"AAMAA,IAAKC,CAAAA,OAAL,CAAa,oBAAb,CAAA;AACAD,IAAKE,CAAAA,GAAIC,CAAAA,SAAT,GAAqB,CAACC,SAAS,UAAV,EAAsBC,QAAQ,SAA9B,EAAyCC,MAAM,OAA/C,EAAwDC,MAAM,OAA9D,EAAuEC,MAAM,OAA7E,EAAsFC,mBAAmB,kBAAzG,EAA6HC,QAAQ,SAArI,EAAgJC,iBAAiB,iBAAjK,EAAoLC,SAAS,UAA7L,EAAyMC,kBAAkB,kBAA3N,EAA+OC,gBAAgB,gBAA/P,EAArB;;",
+"sources":["out/goog/net/eventtype.js"],
+"sourcesContent":["/*TRANSPILED*//*\n\n Copyright The Closure Library Authors.\n SPDX-License-Identifier: Apache-2.0\n*/\n'use strict';\ngoog.provide(\"goog.net.EventType\");\ngoog.net.EventType = {COMPLETE:\"complete\", SUCCESS:\"success\", ERROR:\"error\", ABORT:\"abort\", READY:\"ready\", READY_STATE_CHANGE:\"readystatechange\", TIMEOUT:\"timeout\", INCREMENTAL_DATA:\"incrementaldata\", PROGRESS:\"progress\", DOWNLOAD_PROGRESS:\"downloadprogress\", UPLOAD_PROGRESS:\"uploadprogress\",};\n"],
+"names":["goog","provide","net","EventType","COMPLETE","SUCCESS","ERROR","ABORT","READY","READY_STATE_CHANGE","TIMEOUT","INCREMENTAL_DATA","PROGRESS","DOWNLOAD_PROGRESS","UPLOAD_PROGRESS"]
+}

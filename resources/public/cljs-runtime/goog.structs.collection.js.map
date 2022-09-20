@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"goog.structs.collection.js",
+"lineCount":8,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,yBAAb,CAAA;AACAD,IAAKE,CAAAA,OAAQC,CAAAA,UAAb,GAA0BC,QAAQ,EAAG;CAArC;AAEAJ,IAAKE,CAAAA,OAAQC,CAAAA,UAAWE,CAAAA,SAAUC,CAAAA,GAAlC;AACAN,IAAKE,CAAAA,OAAQC,CAAAA,UAAWE,CAAAA,SAAUE,CAAAA,MAAlC;AACAP,IAAKE,CAAAA,OAAQC,CAAAA,UAAWE,CAAAA,SAAUG,CAAAA,QAAlC;AACAR,IAAKE,CAAAA,OAAQC,CAAAA,UAAWE,CAAAA,SAAUI,CAAAA,QAAlC;;",
+"sources":["goog.structs.collection.js"],
+"sourcesContent":["goog.provide(\"goog.structs.Collection\");\ngoog.structs.Collection = function() {\n};\ngoog.structs.Collection.prototype.add;\ngoog.structs.Collection.prototype.remove;\ngoog.structs.Collection.prototype.contains;\ngoog.structs.Collection.prototype.getCount;\n\n//# sourceMappingURL=goog.structs.collection.js.map\n"],
+"names":["goog","provide","structs","Collection","goog.structs.Collection","prototype","add","remove","contains","getCount"]
+}

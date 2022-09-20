@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"goog.structs.priorityqueue.js",
+"lineCount":13,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,4BAAb,CAAA;AACAD,IAAKE,CAAAA,OAAL,CAAa,mBAAb,CAAA;AACAF,IAAKG,CAAAA,OAAQC,CAAAA,aAAb,GAA6BC,QAAQ,EAAG;AACtCL,MAAKG,CAAAA,OAAQG,CAAAA,IAAKC,CAAAA,IAAlB,CAAuB,IAAvB,CAAA;AADsC,CAAxC;AAGAP,IAAKQ,CAAAA,QAAL,CAAcR,IAAKG,CAAAA,OAAQC,CAAAA,aAA3B,EAA0CJ,IAAKG,CAAAA,OAAQG,CAAAA,IAAvD,CAAA;AACAN,IAAKG,CAAAA,OAAQC,CAAAA,aAAcK,CAAAA,SAAUC,CAAAA,OAArC,GAA+CC,QAAQ,CAACC,QAAD,EAAWC,KAAX,CAAkB;AACvE,MAAKC,CAAAA,MAAL,CAAYF,QAAZ,EAAsBC,KAAtB,CAAA;AADuE,CAAzE;AAGAb,IAAKG,CAAAA,OAAQC,CAAAA,aAAcK,CAAAA,SAAUM,CAAAA,OAArC,GAA+CC,QAAQ,EAAG;AACxD,SAAO,IAAKC,CAAAA,MAAL,EAAP;AADwD,CAA1D;;",
+"sources":["goog.structs.priorityqueue.js"],
+"sourcesContent":["goog.provide(\"goog.structs.PriorityQueue\");\ngoog.require(\"goog.structs.Heap\");\ngoog.structs.PriorityQueue = function() {\n  goog.structs.Heap.call(this);\n};\ngoog.inherits(goog.structs.PriorityQueue, goog.structs.Heap);\ngoog.structs.PriorityQueue.prototype.enqueue = function(priority, value) {\n  this.insert(priority, value);\n};\ngoog.structs.PriorityQueue.prototype.dequeue = function() {\n  return this.remove();\n};\n\n//# sourceMappingURL=goog.structs.priorityqueue.js.map\n"],
+"names":["goog","provide","require","structs","PriorityQueue","goog.structs.PriorityQueue","Heap","call","inherits","prototype","enqueue","goog.structs.PriorityQueue.prototype.enqueue","priority","value","insert","dequeue","goog.structs.PriorityQueue.prototype.dequeue","remove"]
+}

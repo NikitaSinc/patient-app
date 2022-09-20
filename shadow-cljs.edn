@@ -1,0 +1,15 @@
+;; shadow-cljs configuration
+{:deps true
+
+ :builds
+ {:ui
+    {:target     :browser
+     :output-dir "resources/public/js"
+     :build-hooks [(stylo.shadow/reload "resources/public/stylo.css")]
+     :modules    {:main {:init-fn app/init}}
+     :compiler-options {:infer-externs :auto}
+
+    :dev
+        {:devtools {:after-load app/re-render
+                    :whatch-dir "resources/public/stylo.css"}
+         :compiler-options {:optimizations :none}}}}}

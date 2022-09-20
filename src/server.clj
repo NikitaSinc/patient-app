@@ -2,30 +2,24 @@
   (:require [org.httpkit.server :as http]
             [ring.middleware.content-type]
             [ring.middleware.json]
-            [ring.middleware.head]
-            [ring.middleware.params]
-            [ring.middleware.keyword-params]
-            [ring.middleware.params]
-            [compojure.handler :as handler]
-            [compojure.route :as route]
-            [compojure.core :as comp]
-            [config :refer [cfg]]))
+            [ring.middleware.jwt]
+            [ring.middleware.cookies]
+            [config :refer [cfg]]
+            [handlers :as h]))
+
 
 (defonce server (atom nil))
 
-(defn root-handler [request]
-  {:status 200
-   :headers {"Content-type" "text/plain"}
-   :body "Hi there!"})
+(defn app-naked [request & args]
+  (h/routes request))
 
-(comp/defroutes routes
-  (comp/GET "/" request (root-handler request)))
-
-(defn app-naked [request]
-  (routes request))
-
-(defn app [request]
-  (app-naked request))
+(def app (->
+           app-naked
+           (ring.middleware.json/wrap-json-body {:key-fn keyword})
+           ring.middleware.json/wrap-json-response
+           (ring.middleware.content-type/wrap-content-type )
+           ring.middleware.cookies/wrap-cookies
+         ))
 
 (defn -main []
   (reset! server (http/run-server #'app {:port (cfg :server :port)})))

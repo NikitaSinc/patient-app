@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"com.cognitect.transit.delimiters.js",
+"lineCount":10,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,kCAAb,CAAA;AACAD,IAAKE,CAAAA,KAAL,CAAW,QAAQ,EAAG;AACpB,MAAIC,aAAaC,GAAIC,CAAAA,SAAUC,CAAAA,OAAQH,CAAAA,UAAvC;AACAA,YAAWI,CAAAA,GAAX,GAAiB,GAAjB;AACAJ,YAAWK,CAAAA,GAAX,GAAiB,GAAjB;AACAL,YAAWM,CAAAA,GAAX,GAAiB,GAAjB;AACAN,YAAWO,CAAAA,GAAX,GAAiB,GAAjB;AACAP,YAAWQ,CAAAA,OAAX,GAAqB,IAArB;AANoB,CAAtB,CAAA;;",
+"sources":["com.cognitect.transit.delimiters.js"],
+"sourcesContent":["goog.provide(\"com.cognitect.transit.delimiters\");\ngoog.scope(function() {\n  var delimiters = com.cognitect.transit.delimiters;\n  delimiters.ESC = \"~\";\n  delimiters.TAG = \"#\";\n  delimiters.SUB = \"^\";\n  delimiters.RES = \"`\";\n  delimiters.ESC_TAG = \"~#\";\n});\n\n//# sourceMappingURL=com.cognitect.transit.delimiters.js.map\n"],
+"names":["goog","provide","scope","delimiters","com","cognitect","transit","ESC","TAG","SUB","RES","ESC_TAG"]
+}

@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"goog.structs.node.js",
+"lineCount":15,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,mBAAb,CAAA;AACAD,IAAKE,CAAAA,OAAQC,CAAAA,IAAb,GAAoBC,QAAQ,CAACC,GAAD,EAAMC,KAAN,CAAa;AACvC,MAAKC,CAAAA,IAAL,GAAYF,GAAZ;AACA,MAAKG,CAAAA,MAAL,GAAcF,KAAd;AAFuC,CAAzC;AAIAN,IAAKE,CAAAA,OAAQC,CAAAA,IAAKM,CAAAA,SAAUC,CAAAA,MAA5B,GAAqCC,QAAQ,EAAG;AAC9C,SAAO,IAAKJ,CAAAA,IAAZ;AAD8C,CAAhD;AAGAP,IAAKE,CAAAA,OAAQC,CAAAA,IAAKM,CAAAA,SAAUG,CAAAA,QAA5B,GAAuCC,QAAQ,EAAG;AAChD,SAAO,IAAKL,CAAAA,MAAZ;AADgD,CAAlD;AAGAR,IAAKE,CAAAA,OAAQC,CAAAA,IAAKM,CAAAA,SAAUK,CAAAA,KAA5B,GAAoCC,QAAQ,EAAG;AAC7C,SAAO,IAAIf,IAAKE,CAAAA,OAAQC,CAAAA,IAAjB,CAAsB,IAAKI,CAAAA,IAA3B,EAAiC,IAAKC,CAAAA,MAAtC,CAAP;AAD6C,CAA/C;;",
+"sources":["goog.structs.node.js"],
+"sourcesContent":["goog.provide(\"goog.structs.Node\");\ngoog.structs.Node = function(key, value) {\n  this.key_ = key;\n  this.value_ = value;\n};\ngoog.structs.Node.prototype.getKey = function() {\n  return this.key_;\n};\ngoog.structs.Node.prototype.getValue = function() {\n  return this.value_;\n};\ngoog.structs.Node.prototype.clone = function() {\n  return new goog.structs.Node(this.key_, this.value_);\n};\n\n//# sourceMappingURL=goog.structs.node.js.map\n"],
+"names":["goog","provide","structs","Node","goog.structs.Node","key","value","key_","value_","prototype","getKey","goog.structs.Node.prototype.getKey","getValue","goog.structs.Node.prototype.getValue","clone","goog.structs.Node.prototype.clone"]
+}
