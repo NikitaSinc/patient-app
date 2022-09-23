@@ -15,15 +15,18 @@
            :on-change #(rf/dispatch [:new-patient-oms-update (-> % .-target .-value)])}]))
 
 (defn gender-select []
-  [:select {:default-value "male"
+  (let [gender (rf/subscribe [:new-patient-gender])]
+  [:select {:value @gender
             :on-change #(rf/dispatch [:new-patient-gender-update (-> % .-target .-value)])}
    (for [g ["male" "female"]]
      ^{:key g}
-     [:option {:value g} g])])
+     [:option {:value g} g])]))
 
 (defn birth-input []
+  (let [dob (rf/subscribe [:new-patient-dob])]
   [:input {:type :date
-           :on-change #(rf/dispatch [:new-patient-dob-update (-> % .-target .-value)]) }])
+           :value @dob
+           :on-change #(rf/dispatch [:new-patient-dob-update (-> % .-target .-value)]) }]))
 
 (defn address-input []
   (let [address (rf/subscribe [:new-patient-address])]

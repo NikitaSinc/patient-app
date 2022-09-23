@@ -4,60 +4,82 @@
                   [re-frame.core :as rf]
                   [ajax.core :as ajax]))
 
-(def app-state (r/atom {:patients []
-                        :new-patient {:patients/fio "test"
-                                      :patients/oms nil
-                                      :patients/gender nil
-                                      :patients/dob nil
-                                      :patients/address nil}
-                        :new-patient-is-valid {:all-valid false
-                                               :fio-valid false
-                                               :gender-valid false
-                                               :dob-valid false
-                                               :address-valid false}
-                        :selected-patient nil
-                        :beckend-uri "http://localhost:8080/"
-                        :error nil}))
+(def app-state {})
+
+(rf/reg-event-db
+  :init-default-db
+  (fn [_ _]
+    {:patients []
+     :patient-change nil
+     :new-patient {:patients/fio nil
+                   :patients/oms nil
+                   :patients/gender "male"
+                   :patients/dob nil
+                   :patients/address nil}
+     :new-patient-is-valid {:oms-valid false
+                            :fio-valid false
+                            :gender-valid false
+                            :dob-valid false
+                            :address-valid false}
+     :selected-patient nil
+     :beckend-uri "http://localhost:8080/"
+     :error nil}))
+
+;----------------------------------------------------------------------------http events
 
 (rf/reg-event-fx
   :add-patients
-  (fn [{db :db} _]
+  (fn [{db :db} [_ val]]
     {:http-xhrio {:method           :post
-                  :uri              (str (:beckend-uri @app-state) "patients/create")
+                  :uri              (str (:beckend-uri db) "patients/create")
+                  :params           (assoc val :oms (:patient-change db))
+                  :format           (ajax/json-request-format)
                   :response-format  (ajax/json-response-format {:keywords? true})
                   :on-success       [:success-add-patients]
-                  :on-failure       [:failure-http-response]}}))
+                  :on-failure       [:failure-http-response]}
+     :fx [[:dispatch [:clear-new-patient]]]}))
 
 (rf/reg-event-fx
   :get-patients
   (fn [{db :db} _]
     {:http-xhrio {:method           :get
-                  :uri              (str (:beckend-uri @app-state) "patients/get-all")
+                  :uri              (str (:beckend-uri db) "patients/get-all")
                   :response-format  (ajax/json-response-format {:keywords? true})
                   :on-success       [:success-get-patients]
                   :on-failure       [:failure-http-response]}}))
 
 (rf/reg-event-fx
   :delete-patients
-  (fn [{db :db} _]
-    {:http-xhrio {:method           :get
-                  :uri              (str (:beckend-uri @app-state) "patients/get-all")
+  (fn [{db :db} [_ val]]
+    {:http-xhrio {:method           :delete
+                  :uri              (str (:beckend-uri db) "patients/"val"/delete")
+                  :format           (ajax/json-request-format)
                   :response-format  (ajax/json-response-format {:keywords? true})
-                  :on-success       [:success-get-patients]
+                  :on-success       [:success-delete-patients]
                   :on-failure       [:failure-http-response]}}))
 
 (rf/reg-event-fx
   :update-patients
-  (fn [{db :db} _]
-    {:http-xhrio {:method           :get
-                  :uri              (str (:beckend-uri @app-state) "patients/get-all")
+  (fn [{db :db} [_ val]]
+    {:http-xhrio {:method           :post
+                  :uri              (str (:beckend-uri db) "patients/"(:patients/oms val)"/update")
                   :response-format  (ajax/json-response-format {:keywords? true})
-                  :on-success       [:success-get-patients]
-                  :on-failure       [:failure-http-response]}}))
+                  :format           (ajax/json-request-format)
+                  :params           val
+                  :on-success       [:success-update-patients]
+                  :on-failure       [:failure-http-response]}
+     :fx [[:dispatch [:clear-new-patient]]
+          [:dispatch [:patient-change-nil]]]}))
 
 (defn cljsfy-vec [in]
   (let [out (js->clj in :keywordize-keys true)]
     (mapv #(update % :patients/dob (fn [old] (js/Date. old))) out)))
+
+(defn cljsfy [in]
+  (first (js->clj in :keywordize-keys true)))
+
+(defn cljsfy-single-patient [in]
+ (update (cljsfy in) :patients/dob (fn [old] (js/Date. old))))
 
 (rf/reg-event-db
   :set-error
@@ -67,7 +89,35 @@
 (rf/reg-event-db
   :success-add-patients
   (fn [db [_ response]]
-    (update db :patients (conj (cljsfy-vec response)))))
+    (update db :patients conj (cljsfy-single-patient response))))
+
+(rf/reg-event-db
+  :clear-new-patient
+  (fn [db [_ response]]
+    (assoc db :new-patient {:patients/fio nil
+                            :patients/oms nil
+                            :patients/gender "male"
+                            :patients/dob nil
+                            :patients/address nil})))
+
+(rf/reg-event-db
+  :success-delete-patients
+  (fn [db [_ response]]
+  (update db :patients (fn [old]
+                         (vec
+                           (remove
+                             #(=
+                                (:patients/oms %)
+                                (:patients/oms (cljsfy response))) old))))))
+
+(rf/reg-event-db
+  :success-update-patients
+  (fn [db [_ response]]
+    (let [resp (cljsfy-single-patient response)]
+    (update db :patients (fn [old]
+                           (map #(if (= (:patients/oms resp) (:patients/oms %))
+                                        resp
+                                        %) old))))))
 
 (rf/reg-event-db
   :failure-http-response
@@ -78,7 +128,28 @@
   :success-get-patients
   (fn [db [_ response]]
     (assoc db :patients (cljsfy-vec response))))
+
 ;-------------------------------------------------------------------------------main view events
+(rf/reg-sub
+  :patient-change
+  (fn [db _]
+    (:patient-change db)))
+
+(rf/reg-event-db
+  :patient-change-nil
+  (fn [db _]
+    (assoc db :patient-change nil)))
+
+(rf/reg-event-fx
+  :patient-change-set
+  (fn [cofx [_ patient]]
+    {:db (assoc (:db cofx) :patient-change (:patients/oms patient))
+     :fx [[:dispatch [:new-patient-fio-update (.trim (:patients/fio patient))]]
+          [:dispatch [:new-patient-oms-update (.trim (:patients/oms patient))]]
+          [:dispatch [:new-patient-gender-update (:patients/gender patient)]]
+          [:dispatch [:new-patient-address-update (.trim (:patients/address patient))]]
+          [:dispatch [:new-patient-dob-update (:patients/dob patient)]]]}))
+
 (rf/reg-sub
   :patients
   (fn [db _]
@@ -88,12 +159,18 @@
   :error
   (fn [db _]
     (:error db)))
-;-------------------------------------------------------------------------------fio input events
+
 (rf/reg-sub
   :new-patient
   (fn [db _]
     (:new-patient db)))
 
+(rf/reg-sub
+  :new-patient-is-valid
+  (fn [db _]
+    (:new-patient-is-valid db)))
+
+;-------------------------------------------------------------------------------fio input events
 (rf/reg-sub
   :new-patient-fio
   (fn [_ _]
@@ -144,7 +221,7 @@
   (fn [oms]
     (if (= 0 (count oms))
       (do (rf/dispatch [:set-error nil])
-          (rf/dispatch [:new-patients-oms-valid false]))
+          (rf/dispatch [:new-patient-oms-valid false]))
       (if (> (count oms) 16)
         (rf/dispatch [:set-error "To many characters in field OMS"])
         (if-let [valid (re-matches #"[0-9]+" oms)]
@@ -160,6 +237,13 @@
       :fx [[:new-patient-oms-validation oms]]}))
 
 ;------------------------------------------------------------------------------gender input events
+(rf/reg-sub
+  :new-patient-gender
+  (fn [_]
+    (rf/subscribe [:new-patient]))
+  (fn [patient _]
+    (:patients/gender patient)))
+
 (rf/reg-event-db
   :new-patient-gender-valid
   (fn [db [_ valid]]
@@ -179,6 +263,13 @@
       :fx [[:new-patient-gender-validation gender]]}))
 
 ;--------------------------------------------------------------------------------dob input events
+(rf/reg-sub
+  :new-patient-dob
+  (fn [_]
+    (rf/subscribe [:new-patient]))
+  (fn [patient _]
+    (:patients/dob patient)))
+
 (rf/reg-event-db
   :new-patient-dob-valid
   (fn [db [_ valid]]

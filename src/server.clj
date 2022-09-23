@@ -3,7 +3,8 @@
             [ring.middleware.content-type]
             [ring.middleware.json]
             [ring.middleware.jwt]
-            [ring.middleware.cookies]
+            [ring.middleware.keyword-params]
+            [ring.middleware.params]
             [config :refer [cfg]]
             [handlers :as h]))
 
@@ -15,10 +16,10 @@
 
 (def app (->
            app-naked
-           (ring.middleware.json/wrap-json-body {:key-fn keyword})
+           (ring.middleware.json/wrap-json-params {:key-fn keyword})
+           ring.middleware.params/wrap-params
            ring.middleware.json/wrap-json-response
-           (ring.middleware.content-type/wrap-content-type )
-           ring.middleware.cookies/wrap-cookies
+           ring.middleware.content-type/wrap-content-type
          ))
 
 (defn -main []

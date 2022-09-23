@@ -12,10 +12,6 @@
                         :reWriteBatchedInserts true
                         }))
 
-(defn prepared->db [query]
-  (with-open [conn (jdbc/get-connection (db-source) (cfg :db :dbuser) (cfg :db :dbpassword))
-              ps (jdbc/prepare [])]))
-
 (defn ->db [query]
   (with-open [conn (jdbc/get-connection (db-source) (cfg :db :dbuser) (cfg :db :dbpassword))]
     (jdbc/execute! conn query)))
@@ -35,7 +31,7 @@
              :ql/type :pg/insert
              :into :patients
              :value {:oms oms :fio fio :gender gender :dob [:pg/cast dob :date] :address address}
-             :reterning :*}))))
+             :returning :*}))))
 #_(patients-add->db {:oms "1" :fio "asdaf" :gender "male" :dob (java.sql.Date/parse "1999-12-12") :address "asdaq"})
 
 (defn patients-delete->db [oms]
@@ -43,7 +39,8 @@
           {
            :ql/type :pg/delete
            :from :patients
-           :where ^:pg/op[:= :oms oms]})))
+           :where ^:pg/op[:= :oms oms]
+           :returning :oms})))
 #_(patients-delete->db "1")
 
 (defn patients-update->db [oms-old patient]

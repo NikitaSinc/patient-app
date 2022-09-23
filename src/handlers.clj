@@ -10,11 +10,6 @@
    :headers {"Content-type" "text/html"}
    :body (slurp (io/resource "index.html"))})
 
-(defn login-page-handler [request]
-  {:status 200
-   :headers {"Content-type" "text/html"}
-   :body (slurp (io/resource "login.html"))})
-
 (defn get-all-handler [request]
   {:status 200
    :body (chesh/generate-string (db/patients-all->db))})
@@ -46,7 +41,7 @@
            (GET "/get-all" request (get-all-handler request))
            (POST "/create" request (create-new-handler request))
            (POST "/filter" request (filter-handler request))
-           (POST "/search" request (search-handler request)))
-  (context "/patients/:oms" [oms]
-           (DELETE "/" request (delete-by-oms-handler oms request))
-           (POST "/" request (update-patient-handler oms request))))
+           (POST "/search" request (search-handler request))
+           (context "/:oms" [oms]
+                    (DELETE "/delete" request (delete-by-oms-handler oms request))
+                    (POST "/update" request (update-patient-handler oms request)))))
