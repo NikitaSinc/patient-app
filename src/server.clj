@@ -6,7 +6,8 @@
             [ring.middleware.keyword-params]
             [ring.middleware.params]
             [config :refer [cfg]]
-            [handlers :as h]))
+            [handlers :as h])
+  (:gen-class))
 
 (defonce server (atom nil))
 
