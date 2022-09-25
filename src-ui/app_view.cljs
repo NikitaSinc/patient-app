@@ -25,6 +25,22 @@
         (rf/dispatch [:update-patients @patient]))
       (rf/dispatch [:set-error "Not all fields are valid!"]))))
 
+(defn on-search-change [value type]
+  (if (= type "fio")
+    (rf/dispatch [:search-fio-set value])
+    (rf/dispatch [:search-oms-set value])))
+
+(defn on-filter-change [value]
+  (if (= value "none")
+    (rf/dispatch [:filter-gender-set ""])
+    (rf/dispatch [:filter-gender-set value])))
+
+(defn search-get-val [from]
+  (let [by (:by from)]
+    (if (= by "fio")
+      (:fio from)
+      (:oms from))))
+
 (defn error-message []
   (let [error (rf/subscribe [:error])]
   [:div
@@ -33,17 +49,27 @@
 
 (defn table-control []
   [:div {:class (c :flex)}
-   [:input]
-   [:select
-    [:option {:value "By FIO"} ]
-    [:option {:value "By OMS"} ]]
-   [:input]
-   [:select
-    [:option {:value "Yanger"} ]
-    [:option {:value "Older"} ]]
-   [:fieldset
-    [:input {:type :radio :value "Males"} ]
-    [:input {:type :radio :value "Females"} ]]])
+   (let [s (rf/subscribe [:search])]
+   [:div
+    [:input {:placeholder "Search..."
+             :value (search-get-val @s)
+             :on-change #(on-search-change (-> % .-target .-value) (:by @s))}]
+    [:select {:value (:by @s)
+             :on-change #(rf/dispatch [:search-set-by (-> % .-target .-value)])}
+    (for [o ["fio" "oms"]]
+      ^{:key o}
+    [:option {:value o} o])]])
+   (let [f (rf/subscribe [:filter])]
+     [:div {:class (c :flex)}
+      [:p "Gender filter:"]
+      [:select {:value (:gender @f)
+                :on-change #(on-filter-change (-> % .-target .-value))}
+       (for [o ["male" "female" ""]]
+         ^{:key o}
+         [:option {:value o} (if (= o "")
+                                         "none"
+                                         o)])]])
+   [:button {:on-click #(rf/dispatch [:clear-filter-search])} "Clear"]])
 
 (defn changeble-row []
   [:tr
@@ -53,7 +79,8 @@
    [:td [i/birth-input]]
    [:td [i/address-input]]
    [:td [:button {:on-click #(validation-dispatcher)} "Save"]]
-   [:td [:button {:on-click #(rf/dispatch [:patient-change-set])} "Discard"]]])
+   [:td [:button {:on-click #(do (rf/dispatch [:patient-change-nil])
+                                 (rf/dispatch [:clear-new-patient]))} "Discard"]]])
 
 (defn table []
   [:div

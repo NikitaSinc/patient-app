@@ -10,8 +10,8 @@
 
 (defn init []
   (.render root (r/as-element [view/app]))
-  (rf/dispatch [:get-patients])
-  (rf/dispatch [:init-default-db]))
+  (rf/dispatch [:init-default-db])
+  (rf/dispatch [:get-patients]))
 
 (defn ^:dev/after-load re-render []
   (init))

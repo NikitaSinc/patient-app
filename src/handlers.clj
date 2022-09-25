@@ -3,7 +3,12 @@
             [compojure.route :as route]
             [clojure.java.io :as io]
             [cheshire.core :as chesh]
-            [db]))
+            [db]
+            [cheshire.generate :as chgen]))
+
+(chgen/add-encoder java.time.LocalDate
+             (fn [c jsonGenerator]
+               (.writeString jsonGenerator (.toString c))))
 
 (defn root-handler [request]
   {:status 200
@@ -20,19 +25,26 @@
    :body (chesh/generate-string (db/patients-add->db patient))}
   {:status 400}))
 
-(defn filter-handler [request])
-(defn search-handler [request])
+(defn filter-handler [request]
+  (if-let [filt (:json-params request)]
+    {:status 200
+     :body (chesh/generate-string (db/patients-get-fiter->db filt))}))
 
 (defn delete-by-oms-handler [oms request]
+  (let [body (db/patients-delete->db oms)]
+  (if (empty? body)
+    {:status 404}
     {:status 200
-     :body (db/patients-delete->db oms)})
+     :body body})))
 
 (defn update-patient-handler [oms request]
   (if-let [patient (:json-params request)]
-  {:status 200
-   :body (chesh/generate-string (db/patients-update->db oms patient))}
-  {:status 400}))
-
+    (let [body (db/patients-update->db oms patient)]
+      (if (empty? body)
+        {:status 404}
+        {:status 200
+         :body (chesh/generate-string body)}))
+    {:status 400}))
 
 (defroutes routes
   (route/resources "/resources")
@@ -40,8 +52,7 @@
   (context "/patients" []
            (GET "/get-all" request (get-all-handler request))
            (POST "/create" request (create-new-handler request))
-           (POST "/filter" request (filter-handler request))
-           (POST "/search" request (search-handler request))
+           (POST "/get-all-filter" request (filter-handler request))
            (context "/:oms" [oms]
                     (DELETE "/delete" request (delete-by-oms-handler oms request))
                     (POST "/update" request (update-patient-handler oms request)))))

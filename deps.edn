@@ -1,5 +1,5 @@
 {
- :paths ["src" "src-ui" "test" "./"  "resources" "resources/public" ]
+ :paths ["src" "src-ui" "test" "test/ui" "./"  "resources" "resources/public" ]
 
 
  :deps
@@ -20,6 +20,11 @@
    re-frame/re-frame {:mvn/version "1.3.0-rc3"}
    com.health-samurai/macrocss {:mvn/version "0.1.0"}
    day8.re-frame/http-fx {:mvn/version "0.2.4"}
+   day8.re-frame/test {:mvn/version "0.1.5"}
    cheshire/cheshire {:mvn/version "5.11.0"}
-   cider/cider-nrepl {:mvn/version "0.28.5"}
- }}
+   cider/cider-nrepl {:mvn/version "0.28.5"}}
+
+ :aliases {:build {:deps {io.github.clojure/tools.build {:git/tag "v0.8.3" :git/sha "0d20256"}}
+                   :ns-default build}
+           :test {:exec-fn server-test/run-all}}
+ }
