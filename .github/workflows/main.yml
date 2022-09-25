@@ -21,7 +21,7 @@ jobs:
        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
     -
      name: Run Database
-     run: docker run -e POSTGRES_PASSWORD=1111 -p 5432:5432 -d nikitasinc/db_tasks
+     run: docker run -e POSTGRES_PASSWORD=1111 -p 5432:5432 -d nikitasinc/db_patients
     -
      name: Prepare java
      uses: actions/setup-java@v3
