@@ -21,7 +21,7 @@
                  :dbuser "postgres"
                  :dbname "patients_test"
                  :dbpassword "1111"
-                 :dbhost "db-patients"
+                 :dbhost "localhost"
                  }
          :server{
                  :port 8081
