@@ -11,5 +11,5 @@
 #_(run-all)
 
 (deftest wha
-  (rft/run-test-async
+  (rft/run-test-sync*
     (is (= 1 1))))
