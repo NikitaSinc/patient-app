@@ -1,7 +1,7 @@
 (ns config)
 
 (def config
-  {:cur :dev
+  {:cur :compose-demo
    :dev {
          :db    {
                  :dbtype "postgresql"
@@ -25,6 +25,19 @@
                  }
          :server{
                  :port 8081
+                 :host "http://localhost:"}
+         }
+   :compose-demo {
+         :db    {
+                 :dbtype "postgresql"
+                 :dbport 5432
+                 :dbuser "postgres"
+                 :dbname "patients"
+                 :dbpassword "1111"
+                 :dbhost "db-patients"
+                 }
+         :server{
+                 :port 8080
                  :host "http://localhost:"}
          }
    })

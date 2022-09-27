@@ -1,11 +1,11 @@
 version: '2.6'
 
 services:
- tasks:
+ patients:
   container_name: db-patients
   restart: 'always'
   ports: 
-   - "5432:5432"
+   - 5432:5432
   environment:
    - POSTGRES_DB=patients 
    - POSTGRES_PASSWORD=1111
@@ -19,13 +19,12 @@ services:
    - ./resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
    
  server:
-  container_name: server
   restart: always
   ports:
-   - '8080:8080'
-   - '8081:8081'
+   - 8080:8080
+   - 8081:8081
   build: 
    context: .
    dockerfile: docker/app/Dockerfile
   depends_on:
-   - db-patients
+   - patients
