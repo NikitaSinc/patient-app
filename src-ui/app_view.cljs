@@ -1,10 +1,12 @@
 (ns app-view
   (:require
                   [re-frame.core :as rf]
-                  [stylo.core :refer [c]]
                   [clojure.string :as s]
                   [app-events :as ev]
-                  [inputs :as i]))
+                  [inputs :as i])
+  (:require-macros [stylo.core :refer [c]]))
+
+
 
 (defn compute-age [dob]
   (str (js/Math.abs (- (.getUTCFullYear (js/Date.)) (.getUTCFullYear dob)))))
@@ -48,28 +50,31 @@
      [:p @error])]))
 
 (defn table-control []
-  [:div {:class (c :flex)}
+  [:div {:class (c :flex   [:py 5])}
    (let [s (rf/subscribe [:search])]
-   [:div
+   [:div {:class (c [:pr 3])}
     [:input {:placeholder "Search..."
              :value (search-get-val @s)
              :on-change #(on-search-change (-> % .-target .-value) (:by @s))}]
-    [:select {:value (:by @s)
-             :on-change #(rf/dispatch [:search-set-by (-> % .-target .-value)])}
+    [:select {:class (c [:w 15] [:h 6])
+              :value (:by @s)
+              :on-change #(rf/dispatch [:search-set-by (-> % .-target .-value)])}
     (for [o ["fio" "oms"]]
       ^{:key o}
     [:option {:value o} o])]])
    (let [f (rf/subscribe [:filter])]
      [:div {:class (c :flex)}
-      [:p "Gender filter:"]
-      [:select {:value (:gender @f)
+      [:p {:class (c [:pr 1])} "Gender filter: " ]
+      [:select {:class (c [:w 15] [:h 6])
+                :value (:gender @f)
                 :on-change #(on-filter-change (-> % .-target .-value))}
        (for [o ["male" "female" ""]]
          ^{:key o}
          [:option {:value o} (if (= o "")
                                          "none"
                                          o)])]])
-   [:button {:on-click #(rf/dispatch [:clear-filter-search])} "Clear"]])
+   [:button {:on-click #(rf/dispatch [:clear-filter-search])
+             :class (c [:pl 3])} "Clear"]])
 
 (defn changeble-row []
   [:tr
@@ -84,7 +89,7 @@
 
 (defn table []
   [:div
-   [:table {:class (c :table [:border 2] [:w 300]  :rounded)}
+   [:table {:class (c :table [:border 2] [:w 300] :rounded :text-left :border-separate)}
     [:thead
      [:tr
       [:th "FIO"]
@@ -124,7 +129,7 @@
       [:td [:button {:on-click #(validation-dispatcher)} "Add"]]]))]]])
 
 (defn app []
-  [:div {:class (c [:px 12])}
-   [table-control]
+  [:div {:class (c [:px 12] :font-sans)}
+   [table-control ]
    [table]
    [error-message]])

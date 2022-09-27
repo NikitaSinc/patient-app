@@ -1,7 +1,7 @@
 (ns config)
 
 (def config
-  {:cur :compose-demo
+  {:cur :dev
    :dev {
          :db    {
                  :dbtype "postgresql"
